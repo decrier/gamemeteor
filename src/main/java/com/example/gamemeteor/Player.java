@@ -1,6 +1,8 @@
 package com.example.gamemeteor;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 
 public class Player implements Movable, Drawable{
     private double x, y;
@@ -50,9 +52,16 @@ public class Player implements Movable, Drawable{
         }
 
         x += dx * speed * deltaTime;
-        y += dy * speed + deltaTime;
+        y += dy * speed * deltaTime;
 
         // Ограничим внутри экрана
-        x =
+        x = Math.max(0, Math.min(x, GameCanvas.WIDTH - size));
+        y = Math.max(0, Math.min(y, GameCanvas.HEIGHT - size));
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+        gc.setFill(Color.BLUE);
+        gc.fillRect(x, y, size, size);
     }
 }
